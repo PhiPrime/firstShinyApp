@@ -1,0 +1,37 @@
+---
+title: "index"
+author: "PhiPrime"
+date: "8/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+dat <- readLines("./Data/Sales_Data.txt")
+hour <- 0
+out <- c("Name", "Quantity", "Price", "Total Sales", "Hour")
+for (i in 1:length(dat)) {
+  #check for hour line
+  if (grepl("[Hh]our", dat[i])) {
+    hour <- gsub("[^0-9]", "", dat[i])
+  }
+  
+  #Create cs-data
+  if (grepl("[$]", dat[i])) {
+  csd <- paste0(gsub(" {2,}", ",", gsub("[=$]", "", dat[i])), hour)
+  line <- strsplit(csd, ",")[[1]]
+  out <- rbind(out, line)
+  }
+}
+rownames(out) <- NULL
+df <- as.data.frame(out)
+colnames(df) <- out[1,]
+df <- df[-1,]
+rownames(df) <- NULL
+df
+write.csv(df, "./Data/testData.csv", row.names = FALSE)
+```
+

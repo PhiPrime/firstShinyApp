@@ -14,11 +14,11 @@ shinyServer(function(input, output) {
 
     dat <- reactive({
         if (is.null(input$file)) {
-            fileLoc <- "./Data/testData.csv"
+            fileLoc <- "./data/testData.csv"
         } else {
             fileLoc <- input$file$datapath
-            validate(need(grepl("$csv", fileLoc), "Please upload a csv file"))
         }
+        validate(need(grepl("csv$", fileLoc), fileLoc))
         return(read.csv(fileLoc))
         })
     output$text <- renderTable({head(dat())})

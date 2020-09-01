@@ -20,12 +20,19 @@ shinyUI(fluidPage(
         sidebarPanel(
             fileInput("file", "Upload a .csv file",
                       accept = ".csv",
-                      placeholder = "Using Demo Data")
+                      placeholder = "Using Demo Data"),
+            p("The following column names are required: Name, Quantity, Price, Time"),
+            tags$div(id = 'placeholder')
+
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-            tableOutput("text")
+            radioButtons("xaxis", "Choose what to plot on the X axis:",
+                         c("Time", "Price")),
+            radioButtons("yaxis", "Choose what to plot on the Y axis:",
+                         c("Quantity", "Total Sales")),
+            plotOutput("plot")
         )
     )
 ))

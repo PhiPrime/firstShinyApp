@@ -1,15 +1,28 @@
 ---
-title: "index"
-author: "PhiPrime"
-date: "8/29/2020"
-output: html_document
+title: "Sales Trends Throughout Day by Hour - Presentation"
+author: "Luke Coughlin"
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+## What Does It Do?  
+This app can dynamically visualize a data set of sales data per hour. This gives the user the ability to analyze how their product is selling with respect to time. The user can subset their available data into separate files to see how various external changes have been affecting their sales.  
+  
+The user has the ability to customize the plot in the following ways:  
+- **Toggle items plotted**: The Shiny app will evaluate the data set for all unique item names and create check boxes that can be toggled to show that item on the plot.  
+- **Y-Axis value**: The user can select to plot the quantity or total sales of each toggled item per the given time intervals.  
+- **X-Axis ticks**: The user can modify the amount of ticks shown on the graph with a drop down menu, selecting for ticks to appear between every hour and every three hours.  
+
+## Formatting Output  
+The given file has to have to following column names with relevant information in each row: `Name`, `Quantity`, `Price`, `Hour`.  
+Due to this requirement some data cleaning may be required before the app can be used. The demo data set was given with a heading containing information about the specific restaurant followed by a untidy organization of a sales data. The format of the raw data has been preserved while removing the identifiable information from the document. The code on the following is used to prepare to raw data for interactions with the application.
+
+## Preparing Data for App {.smaller}  
+
+```{r comment=""}
 dat <- readLines("./Data/Sales_Data.txt")
 hour <- 0
 out <- c("Name", "Quantity", "Price", "Total Sales", "Hour")
@@ -18,20 +31,21 @@ for (i in 1:length(dat)) {
   if (grepl("[Hh]our", dat[i])) {
     hour <- gsub("[^0-9]", "", dat[i])
   }
-  
   #Create cs-data
   if (grepl("[$]", dat[i])) {
   csd <- paste0(gsub(" {2,}", ",", gsub("[=$]", "", dat[i])), hour)
-  line <- strsplit(csd, ",")[[1]]
-  out <- rbind(out, line)
+  out <- rbind(out, strsplit(csd, ",")[[1]])
   }
 }
-rownames(out) <- NULL
 df <- as.data.frame(out)
-colnames(df) <- out[1,]
-df <- df[-1,]
+colnames(df) <- out[1,]; df <- df[-1,]
 rownames(df) <- NULL
-df
-write.csv(df, "./Data/testData.csv", row.names = FALSE)
+head(df[order(df$Name),], 4)
+write.csv(df, "./Sales/data/testData.csv", row.names = FALSE)
 ```
+
+
+## Project Resources  
+* [The repository containing the code for the Shiny app can be found on my GitHub.]()  
+* [The Shiny app can be found here.]()  
 

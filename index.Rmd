@@ -1,6 +1,7 @@
 ---
 title: "Sales Trends Throughout Day by Hour - Presentation"
 author: "Luke Coughlin"
+date: 09/05/2020
 output: ioslides_presentation
 ---
 
@@ -46,6 +47,12 @@ write.csv(df, "./Sales/data/testData.csv", row.names = FALSE)
 
 
 ## Project Resources  
-* [The repository containing the code for the Shiny app can be found on my GitHub.]()  
-* [The Shiny app can be found here.]()  
+* [The repository containing the code for the Shiny app can be found on my GitHub.](https://github.com/PhiPrime/firstShinyApp)  
+* [The Shiny app can be found here.](https://phiprime.shinyapps.io/Sales/)  
+
+
+
+
+
+
 

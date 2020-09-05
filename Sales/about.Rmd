@@ -19,5 +19,5 @@ The app reads in the given dataset and generates a user interface to toggle whic
 
 
 ## Additional Links  
-* [View code]()  
-* [View pitch presentation]()  
+* [View code](https://github.com/PhiPrime/firstShinyApp)  
+* [View pitch presentation](https://phiprime.github.io/firstShinyApp/index.html)  
